@@ -1,6 +1,7 @@
 const express = require('express')
 const {WebhookClient} = require('dialogflow-fulfillment');
 const GlobalEnv = require('./GlobalEnv')
+const calendar = require('./calendar.js')
 
 const app = express()
  
@@ -16,6 +17,7 @@ app.post('/webhook', express.json(),function (req, res) {
         const data = req.body.queryResult.parameters
 
         console.log("datos: ", data);
+        calendar.makeAppointment(agent)
 
         agent.add(`Respuesta registrada. \n ¿Algo más en lo que puedo ayudarte?`);
       }
