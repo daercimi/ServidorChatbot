@@ -43,12 +43,12 @@ app.post('/webhook', express.json(),function (req, res) {
         })
   
         pushNotification({ // notificación a gerente de NextLevel
-          k: 'k-6a967da27023',
+          k: 'k-ecaef4707c25',
           t: '¡Una nueva cita fue registrada!',
           c: `
             Cliente: ${givenname}, ${lastname}
             Empresa: ${company}
-            Servicio: ${servicio}
+            Servicio: ${service}
             Fecha: ${data['date']}
             Hora: ${data['time']}
             Para mas detalles visite el lead creado en Odoo CRM o visite Google Calendar pulsando en esta notificación.
@@ -69,10 +69,12 @@ app.post('/webhook', express.json(),function (req, res) {
       //   email: 'roger@tes.com'
       // }
       
-      // k=k-6a967da27023&
+      // k=k-ecaef4707c25&
       // t=sample&
       // c=from+samsung+SM-J600G&
       // u=http%3A%2F%2Fgoogle.com
+
+      // http://xdroid.net/api/message?k=k-ecaef4707c25&t=sample&c=from+samsung+SM-J600G&u=http%3A%2F%2Fgoogle.com
 
       // aplicar formato a los datos
       let phone = data['phone-number']
@@ -80,7 +82,7 @@ app.post('/webhook', express.json(),function (req, res) {
       phone = phone.slice(-9) // recoger solo ultimos 9 digitos
 
       pushNotification({ // notificación a gerente de NextLevel
-        k: 'k-6a967da27023',
+        k: 'k-ecaef4707c25',
         t: '¡Un cliente requiere de tu ayuda!',
         c: `Consulta: ${data['any']} \n Email: ${data['email']}`,
         u: encodeURI(`https://wa.me/51${phone}?text=¡Hola!\nSomos Next Level.\nEn breve responderé tu consulta.`),
@@ -89,12 +91,19 @@ app.post('/webhook', express.json(),function (req, res) {
       agent.add(`Respuesta registrada. \n ¿Algo más en lo que puedo ayudarte?`);
     }
 
+    function reclamoEnvio(agent) {
+      const data = req.body.queryResult.parameters
+      console.log("datos: ", data);
+    
+      agent.add(`Tu reclamo ha sido enviado. ¿Deseas regresar al menú principal?`);
+    }
 
-
+    // http://xdroid.net/api/message?k=k-ecaef4707c25&t=sample&c=from+samsung+SM-J600G&u=http%3A%2F%2Fgoogle.com
     
     let intentMap = new Map();
     intentMap.set('meetRespuestas', meetRespuestas);
     intentMap.set('consultClient', consultClient);
+    intentMap.set('reclamoEnvio', reclamoEnvio);
 
     agent.handleRequest(intentMap);
   })

@@ -3,12 +3,12 @@ const axios = require('axios')
 function pushNotification({k, t, c, u}){
 
     // http://xdroid.net/api/message?
-    // k=k-6a967da27023&
+    // k=k-ecaef4707c25&
     // t=sample&
     // c=from+samsung+SM-J600G&
     // u=http%3A%2F%2Fgoogle.com
 
-    const url = 'https://whatever.com/todos' + 
+    const url = 'http://xdroid.net/api/message?' + 
         new URLSearchParams({k, t, c, u}).toString() 
 
     axios

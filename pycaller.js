@@ -26,8 +26,8 @@ function call_nlocrm(data){
     } = data;
 
     const childPython = !data? 
-        spawn('python', test_data) :
-        spawn('python', [
+        spawn('python2', test_data) :
+        spawn('python2', [
             "scripts/nlocrm.py",
             "--lastname",  lastname,
             "--givenname", givenname,
